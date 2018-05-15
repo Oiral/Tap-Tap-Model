@@ -9,8 +9,6 @@ public class TappingScript : MonoBehaviour {
 
     public int TapsToGo = 2;
 
-    public int tapModifier = 10;
-
     public int itemsremoved = 0;
 
     public Text priceText;
@@ -42,7 +40,13 @@ public class TappingScript : MonoBehaviour {
 
     public void Tap()
     {
-        TapsToGo -= tapModifier;
+        if (thingsToMould.Count == 0)
+        {
+            Debug.Log("Nothing to be tapped on");
+            return;
+        }
+
+        TapsToGo -= PlayerWallet.instance.tapModifier;
 
         while (TapsToGo <= 0)
         {
