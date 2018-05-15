@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TappingScript : MonoBehaviour {
 
@@ -11,6 +12,14 @@ public class TappingScript : MonoBehaviour {
     public int tapModifier = 10;
 
     public int itemsremoved = 0;
+
+    public Text priceText;
+    public int price;
+
+    public int priceModifier;
+
+    public GameObject statue;
+    public Slider slider;
 
     private void Update()
     {
@@ -24,6 +33,13 @@ public class TappingScript : MonoBehaviour {
         }
     }
 
+    public void updateRotation()
+    {
+        Debug.Log("Updating Rotation");
+        Vector3 tempRot = new Vector3(0, slider.value, 0);
+        statue.transform.rotation = Quaternion.Euler(tempRot);
+    }
+
     public void Tap()
     {
         TapsToGo -= tapModifier;
@@ -33,6 +49,8 @@ public class TappingScript : MonoBehaviour {
             ChangeActive();
             itemsremoved += 1;
             TapsToGo += itemsremoved + 2;
+            price += priceModifier;
+            priceText.text = "Current sell Value - $" + price.ToString();
         }
     }
 
@@ -45,5 +63,10 @@ public class TappingScript : MonoBehaviour {
             Destroy(thingsToMould[0]);
         }
         thingsToMould.RemoveAt(0);
+    }
+
+    public void Sell()
+    {
+        Debug.Log("You made " + price + " amount of money! Well done!");
     }
 }
